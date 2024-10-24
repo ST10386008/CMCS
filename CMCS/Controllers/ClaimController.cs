@@ -1,25 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using CMCS.Models;
-namespace CMCS.Controllers
+
+[ApiController]
+[Route("api/[controller]")]
+public class ClaimsController : ControllerBase
 {
-    public class ClaimController : Controller
+    private readonly ClaimService _claimService;
+
+    public ClaimsController(ClaimService claimService)
     {
-        // Lecturer submits a claim
-        public IActionResult SubmitClaim()
-        {
-            return View();
-        }
+        _claimService = claimService;
+    }
 
-        // Coordinator approves or rejects a claim
-        public IActionResult ApproveClaim()
-        {
-            return View();
-        }
+    [HttpPost]
+    public async Task<IActionResult> SubmitClaim([FromBody] Claim claim)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
 
-        // Lecturer tracks the status of their claim
-        public IActionResult TrackClaim()
-        {
-            return View();
-        }
+        await _claimService.CreateClaim(claim);
+        return Ok();
+    }
+
+    [HttpGet("{lecturerId}")]
+    public async Task<IActionResult> GetClaims(int lecturerId)
+    {
+        var claims = await _claimService.GetClaimsByLecturerId(lecturerId);
+        return Ok(claims);
     }
 }
