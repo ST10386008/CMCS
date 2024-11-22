@@ -1,4 +1,4 @@
-﻿namespace ContractMonthlyClaimSystem.Models
+﻿namespace CMCS.Models
 {
     public class User
     {
