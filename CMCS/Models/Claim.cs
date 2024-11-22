@@ -1,14 +1,18 @@
-public class Claim
-{
-    public int ClaimID { get; set; }
-    public int LecturerID { get; set; }
-    public decimal HoursWorked { get; set; }
-    public DateTime ClaimDate { get; set; }
-    public string Status { get; set; }
-    public int ApprovedBy { get; set; }
+using System.ComponentModel.DataAnnotations;
 
-    public Lecturer Lecturer { get; set; }
-    public Coordinator Coordinator { get; set; }
-    public ICollection<ClaimDocument> ClaimDocuments { get; set; }
-    public ICollection<ClaimStatus> ClaimStatuses { get; set; }
+namespace ContractMonthlyClaimSystem.Models
+{
+    public class Claim
+    {
+        public int ClaimId { get; set; }
+        public string LecturerId { get; set; } // Foreign key to identify lecturer
+        public int HoursWorked { get; set; }
+        public decimal HourlyRate { get; set; }
+        public decimal TotalAmount { get; set; } // Auto-calculated field
+        public string Notes { get; set; }
+        public string Status { get; set; } // Pending, Approved, Rejected
+        public DateTime SubmissionDate { get; set; }
+        public List<SupportingDocument> Documents { get; set; }
+    }
+
 }

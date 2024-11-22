@@ -9,9 +9,3 @@ public class LecturerClaim
     public string Notes { get; set; }
     public ClaimStatus Status { get; set; } = ClaimStatus.Pending;
 }
-public enum ClaimStatus
-{
-    Pending,
-    Approved,
-    Rejected
-}

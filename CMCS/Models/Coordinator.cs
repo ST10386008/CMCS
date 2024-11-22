@@ -7,5 +7,5 @@ public class Coordinator
     public string Email { get; set; }
 
     // Navigation property
-    public ICollection<Claim> ApprovedClaims { get; set; }
+    public ICollection<Claim> ApprovedClaims { get; set; } = new List<Claim>(); // Initialize to avoid null reference
 }
