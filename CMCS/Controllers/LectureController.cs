@@ -1,5 +1,6 @@
-using ContractMonthlyClaimSystem.Models;
+using CMCS.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 public class LecturerController : Controller
 {
@@ -12,7 +13,12 @@ public class LecturerController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var lecturerId = User.Identity.Name; // Assuming logged-in user's ID
+        var lecturerId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (lecturerId == null)
+        {
+            return Unauthorized(); // Redirect or handle unauthorized access
+        }
+
         var claims = await _claimService.GetClaimsByLecturerAsync(lecturerId);
         return View(claims);
     }
@@ -23,14 +29,21 @@ public class LecturerController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> SubmitClaim(Claim claim)
+    public async Task<IActionResult> SubmitClaim(CMCS.Models.Claim claim)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            claim.LecturerId = User.Identity.Name; // Assuming logged-in user's ID
-            await _claimService.SubmitClaimAsync(claim);
-            return RedirectToAction(nameof(Index));
+            return View(claim); // Return form with validation errors
         }
-        return View(claim);
+
+        var lecturerId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (lecturerId == null)
+        {
+            return Unauthorized(); // Handle unauthorized access
+        }
+
+        claim.LecturerId = lecturerId;
+        await _claimService.SubmitClaimAsync(claim);
+        return RedirectToAction(nameof(Index));
     }
 }

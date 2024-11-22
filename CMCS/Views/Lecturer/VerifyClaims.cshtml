@@ -1,4 +1,4 @@
-@model IEnumerable<LecturerClaim>
+@model IEnumerable<Claim>
 @{
     ViewData["Title"] = "Verify Claims";
 }
@@ -21,17 +21,17 @@
         @foreach (var claim in Model)
         {
             <tr>
-                <td>@claim.ClaimID</td>
-                <td>@claim.LecturerID</td>
+                <td>@claim.ClaimId</td>
+                <td>@claim.LecturerId</td>
                 <td>@claim.HoursWorked</td>
                 <td>@claim.HourlyRate</td>
-                <td>@claim.ClaimDate</td>
+                <td>@claim.SubmissionDate</td>
                 <td>@claim.Notes</td>
                 <td>
-                    <form method="post" asp-action="ApproveClaim" asp-route-claimId="@claim.ClaimID">
+                    <form method="post" asp-action="ApproveClaim" asp-route-claimId="@claim.ClaimId">
                         <button type="submit" class="btn btn-success">Approve</button>
                     </form>
-                    <form method="post" asp-action="RejectClaim" asp-route-claimId="@claim.ClaimID">
+                    <form method="post" asp-action="RejectClaim" asp-route-claimId="@claim.ClaimId">
                         <button type="submit" class="btn btn-danger">Reject</button>
                     </form>
                 </td>

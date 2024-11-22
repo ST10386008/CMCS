@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ContractMonthlyClaimSystem.Models
+namespace CMCS.Models
 {
     public class Claim
     {
@@ -14,5 +14,4 @@ namespace ContractMonthlyClaimSystem.Models
         public DateTime SubmissionDate { get; set; }
         public List<SupportingDocument> Documents { get; set; }
     }
-
 }

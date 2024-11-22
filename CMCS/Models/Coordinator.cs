@@ -1,3 +1,5 @@
+using CMCS.Models;
+
 public class Coordinator
 {
     public int CoordinatorID { get; set; }
